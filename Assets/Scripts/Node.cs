@@ -6,12 +6,16 @@ public class Node : IHeapItem<Node>
 
     public bool walkable;
     public Vector3 worldPosition;
+    public GameObject occupiedPiece;
+
     public int gridX;
     public int gridY;
 
     public int gCost;
     public int hCost;
     public Node parent;
+
+
     int heapIndex;
 
     public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
@@ -50,5 +54,18 @@ public class Node : IHeapItem<Node>
             compare = hCost.CompareTo(nodeToCompare.hCost);
         }
         return -compare;
+    }
+
+    public GameObject getPiece()
+    {
+        return occupiedPiece;
+    }
+
+    public void setPiece(GameObject piece)
+    {
+        occupiedPiece = piece;
+    }
+    public bool occupied() {
+        return walkable;
     }
 }

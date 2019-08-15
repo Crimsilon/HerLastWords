@@ -4473,6 +4473,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerPosition: {x: 0, y: 0, z: 0}
+  destination: {x: 0, y: 0, z: 0}
+  grid: {fileID: 0}
+  smoothTime: 0
 --- !u!1001 &1571661692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5787,7 +5790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4473008886435824, guid: 1646b568529003c4885fae5b99c6c24a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.250002
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 4473008886435824, guid: 1646b568529003c4885fae5b99c6c24a, type: 3}
       propertyPath: m_LocalRotation.x
