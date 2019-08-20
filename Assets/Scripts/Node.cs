@@ -18,6 +18,10 @@ public class Node : IHeapItem<Node>
 
     int heapIndex;
 
+    void start()
+    {
+
+    }
     public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY)
     {
         walkable = _walkable;
@@ -66,6 +70,6 @@ public class Node : IHeapItem<Node>
         occupiedPiece = piece;
     }
     public bool occupied() {
-        return walkable;
+        return !walkable;
     }
 }
