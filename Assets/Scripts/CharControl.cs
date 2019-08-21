@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class CharControl : MonoBehaviour
 {
+    Vector3 tempDes;
     public int actorNum = 1;
     public LayerMask unwalkableMask;
     public Vector3 playerPosition;
@@ -42,13 +43,13 @@ public class CharControl : MonoBehaviour
 
                 Vector3 temp = new Vector3(8, 0, 0);
                 //temporary destination used to check if thelocation is occupied
-                Vector3 tempDes = new Vector3();
+               
 
                 tempDes = transform.position + temp;
                 //checking the grid square of the block up for vacancy
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
-                    //runs if unoccupied
+                    //runs if occupied
                 }
                 else
                 {
@@ -75,18 +76,20 @@ public class CharControl : MonoBehaviour
             {
                 Vector3 temp = new Vector3(-8, 0, 0);
                 //temporary destination used to check if thelocation is occupied
-                Vector3 tempDes = new Vector3();
+                
 
                 tempDes = transform.position + temp;
                 //checking the grid square of the block up for vacancy
+                print(grid.NodeFromWorldPoint(tempDes).occupied());
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
-                    //runs if unoccupied
+                    //runs if occupied
+                    print("full");
                 }
                 else
                 {
                     // runs if space is unoccupied 
-
+                    print("we");
                     destination = transform.position + temp;
                 }
 
@@ -106,7 +109,7 @@ public class CharControl : MonoBehaviour
             {
                 Vector3 temp = new Vector3(0, 0, 8);
 
-                Vector3 tempDes = new Vector3();
+              
 
                 tempDes = transform.position + temp;
                 //checking the grid square of the block up for vacancy
@@ -140,13 +143,15 @@ public class CharControl : MonoBehaviour
             {
                 Vector3 temp = new Vector3(0, 0, -8);
                 //temporary destination used to check if thelocation is occupied
-                Vector3 tempDes = new Vector3();
+                
 
                 tempDes = transform.position + temp;
-                //checking the grid square of the block up for vacancy
+                print(tempDes);
+                
+                    //checking the grid square of the block up for vacancy
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
-                    //runs if unoccupied
+                    //runs if occupied
                 }
                 else
                 {
@@ -174,24 +179,24 @@ public class CharControl : MonoBehaviour
     {
         if (actorNum == TurnController.getCurActor())
         {
-            if (Input.anyKeyDown)
+            if (Input.anyKeyDown&& transform.position == destination)
             {
 
                 action();
 
-                Debug.Log(TurnController.getCurActor());
+              //  Debug.Log(TurnController.getCurActor());
 
-                Debug.Log("action performed");
+               // Debug.Log("action performed");
 
-                print(actorNum);
+                //print(actorNum);
 
                 TurnController.incrementActor();
 
-                print(actorNum);
+                //print(actorNum);
 
                 TurnController.lastActor();
 
-                print(actorNum);
+                //print(actorNum);
 
             }
 
@@ -208,4 +213,7 @@ public class CharControl : MonoBehaviour
         }
     }
 
+    
 }
+
+
