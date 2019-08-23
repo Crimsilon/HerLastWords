@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SlimeAI : MonoBehaviour {
     public int actorNum = 1;
+    public Grid grid;
 	// Use this for initialization
 	void Start () {
 		
@@ -20,7 +21,7 @@ public class SlimeAI : MonoBehaviour {
         }
 	}
 
-    void action()
+    public void action()
     {
         float act = Random.Range(0, 4);
         Vector3 temp = new Vector3(0,0,0);

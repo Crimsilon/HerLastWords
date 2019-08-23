@@ -17,9 +17,12 @@ public class CharControl : MonoBehaviour
     public Grid grid;
     public float smoothTime;
     private Vector3 velocity = Vector3.zero;
+    public TurnController turnControl;
+    private bool canAct;
 
     private void Start()
     {
+        canAct = true;
         destination = transform.position;
     }
     void Update()
@@ -179,25 +182,26 @@ public class CharControl : MonoBehaviour
     {
         if (actorNum == TurnController.getCurActor())
         {
-            if (Input.anyKeyDown&& transform.position == destination)
+            if (Input.anyKeyDown && transform.position == destination && canAct)
             {
 
                 action();
+                canAct = false;
+                //  Debug.Log(TurnController.getCurActor());
 
-              //  Debug.Log(TurnController.getCurActor());
-
-               // Debug.Log("action performed");
-
-                //print(actorNum);
-
-                TurnController.incrementActor();
+                // Debug.Log("action performed");
 
                 //print(actorNum);
 
-                TurnController.lastActor();
+                // TurnController.incrementActor();
 
                 //print(actorNum);
 
+                //TurnController.lastActor();
+
+                //print(actorNum);
+                TurnController.round();
+                
             }
 
         }
@@ -213,7 +217,11 @@ public class CharControl : MonoBehaviour
         }
     }
 
-    
+    public void actUpdate()
+    {
+        canAct = true;
+    }
+
 }
 
 
