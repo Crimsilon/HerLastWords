@@ -4473,6 +4473,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerPosition: {x: 0, y: 0, z: 0}
+  destination: {x: 0, y: 0, z: 0}
+  grid: {fileID: 0}
+  smoothTime: 0
+  turnControl: {fileID: 0}
 --- !u!1001 &1571661692
 PrefabInstance:
   m_ObjectHideFlags: 0
