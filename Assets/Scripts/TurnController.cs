@@ -14,6 +14,7 @@ public class TurnController : MonoBehaviour {
         totalActors = 1;
         activeActors = buildList();
         player = GameObject.FindGameObjectWithTag("Player");
+
 	}
 	
 	// Update is called once per frame
@@ -28,6 +29,7 @@ public class TurnController : MonoBehaviour {
             return GameObject.FindGameObjectsWithTag("Enemy");
             
         }
+
         catch (System.Exception)
         {
 

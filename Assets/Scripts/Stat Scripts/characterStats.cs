@@ -56,6 +56,7 @@ public class characterStats : MonoBehaviour
         //Death happens
         Debug.Log(transform.name + " died ");
 
+        
 
     }
 }

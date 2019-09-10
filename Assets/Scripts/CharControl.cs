@@ -18,13 +18,24 @@ public class CharControl : MonoBehaviour
     public float smoothTime;
     private Vector3 velocity = Vector3.zero;
     public TurnController turnControl;
-    private bool canAct;
+    public bool canAct;
 
+    /*1 disable turns from taking an action
+     * 2 on direction click check for an enemy entity if present do an attack
+     * 
+     * Update the grid to contain the players position.
+     * 
+     * 
+     */
     private void Start()
     {
+        grid.NodeFromWorldPoint(transform.position).setOccupied(true);
+
         canAct = true;
+
         destination = transform.position;
     }
+
     void Update()
     {
 
@@ -53,6 +64,10 @@ public class CharControl : MonoBehaviour
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
                     //runs if occupied
+                    if (grid.NodeFromWorldPoint(tempDes).getPiece().tag == "Enemy")
+                    {
+                        attack(tempDes);
+                    }
                 }
                 else
                 {
@@ -67,7 +82,7 @@ public class CharControl : MonoBehaviour
                 Quaternion temp = new Quaternion(0, 0, 0, 0);
                 temp = Quaternion.Euler(0, 90, 0);
                 transform.rotation = temp;
-
+                action();
             }
         }
 
@@ -84,15 +99,19 @@ public class CharControl : MonoBehaviour
                 tempDes = transform.position + temp;
                 //checking the grid square of the block up for vacancy
                 print(grid.NodeFromWorldPoint(tempDes).occupied());
+
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
                     //runs if occupied
-                    print("full");
+                    if (grid.NodeFromWorldPoint(tempDes).getPiece().tag == "Enemy")
+                    {
+                        attack(tempDes);
+                    }
                 }
                 else
                 {
                     // runs if space is unoccupied 
-                    print("we");
+                    
                     destination = transform.position + temp;
                 }
 
@@ -102,6 +121,7 @@ public class CharControl : MonoBehaviour
                 Quaternion temp = new Quaternion(0, 270, 0, 0);
                 temp = Quaternion.Euler(0, 270, 0);
                 transform.rotation = temp;
+                action();
             }
         }
 
@@ -119,7 +139,11 @@ public class CharControl : MonoBehaviour
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
                     //runs if unoccupied
-
+                    if (grid.NodeFromWorldPoint(tempDes).getPiece().tag == "Enemy")
+                    {
+                        print("attack");
+                        attack(tempDes);
+                    }
                 }
                 else
                 {
@@ -133,7 +157,7 @@ public class CharControl : MonoBehaviour
                 Quaternion newRotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w); ;
                 newRotation = Quaternion.Euler(0, 0, 0); // this add a -90 degrees Y rotation
                 transform.rotation = newRotation;
-
+                action();
             }
 
         }
@@ -149,12 +173,16 @@ public class CharControl : MonoBehaviour
                 
 
                 tempDes = transform.position + temp;
-                print(tempDes);
+
                 
                     //checking the grid square of the block up for vacancy
                 if (grid.NodeFromWorldPoint(tempDes).occupied())
                 {
                     //runs if occupied
+                    if (grid.NodeFromWorldPoint(tempDes).getPiece().tag == "Enemy")
+                    {
+                        attack(tempDes);
+                    }
                 }
                 else
                 {
@@ -170,10 +198,20 @@ public class CharControl : MonoBehaviour
                 Quaternion newRotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w); ;
                 newRotation = Quaternion.Euler(0, 180, 0); // this add a 90 degrees Y rotation
                 transform.rotation = newRotation;
-
+                action();
             }
         }
+        canAct = false;
 
+        grid.NodeFromWorldPoint(transform.position).setOccupied(true);
+
+        grid.NodeFromWorldPoint(transform.position).setPiece(null);
+
+        grid.NodeFromWorldPoint(destination).setOccupied(false);
+
+        grid.NodeFromWorldPoint(destination).setPiece(gameObject);
+
+        StartCoroutine("updateAct");
     }
 
 
@@ -186,20 +224,8 @@ public class CharControl : MonoBehaviour
             {
 
                 action();
-                canAct = false;
-                //  Debug.Log(TurnController.getCurActor());
 
-                // Debug.Log("action performed");
-
-                //print(actorNum);
-
-                // TurnController.incrementActor();
-
-                //print(actorNum);
-
-                //TurnController.lastActor();
-
-                //print(actorNum);
+                
                 TurnController.round();
                 
             }
@@ -207,21 +233,40 @@ public class CharControl : MonoBehaviour
         }
 
     }
+    public void attack(Vector3 location)
+    {
+        print("we atk");
+        grid.NodeFromWorldPoint(location).getPiece().GetComponent<characterStats>().TakeDamage(gameObject.GetComponent<characterStats>().damage.GetValue());
+    }
+
     public void move()
     {
         if (transform.position != destination)
         {
 
-            print("wub");
+            
             transform.position = Vector3.MoveTowards(transform.position, destination, smoothTime * Time.deltaTime);
         }
     }
 
     public void actUpdate()
     {
+        print("this line runs");
+        canAct = true;
+       
+    }
+
+
+    //controls the speed at which player can input commands
+
+    public IEnumerator updateAct()
+    {
+        yield return new WaitForSeconds(.3f);
+
         canAct = true;
     }
 
+    
 }
 
 

@@ -69,6 +69,7 @@ public class Node : IHeapItem<Node>
     {
         occupiedPiece = piece;
     }
+
     public bool occupied() {
         return !walkable;
     }
