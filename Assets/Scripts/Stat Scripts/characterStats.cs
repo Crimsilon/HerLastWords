@@ -2,18 +2,19 @@
 
 public class characterStats : MonoBehaviour
 {
-    public int maxHealth = 100;
+    public int maxHealth;
     public int currentHealth { get; private set; }
-
-
 
     public stat damage;
     public stat armor;
 
+    public float hpRemain;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+
+        print("max" + maxHealth + "cur" + currentHealth);
     }
 
 
@@ -25,11 +26,7 @@ public class characterStats : MonoBehaviour
     private void Update ()
     {
 
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-
-        }
+        
 
     }
     
@@ -40,8 +37,14 @@ public class characterStats : MonoBehaviour
         damage -= armor.GetValue();
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
 
-
+      
         currentHealth -= damage;
+        print(currentHealth + " " + maxHealth);
+
+        hpRemain =  (float)currentHealth / maxHealth;
+
+        print(hpRemain);
+        gameObject.GetComponent<HealthBarControl>().setHealthBar(hpRemain);
         Debug.Log(transform.name + " takes " + damage + " damage ");
 
         if (currentHealth <= 0)

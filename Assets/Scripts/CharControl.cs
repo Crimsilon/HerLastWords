@@ -23,7 +23,7 @@ public class CharControl : MonoBehaviour
     /*1 disable turns from taking an action
      * 2 on direction click check for an enemy entity if present do an attack
      * 
-     * Update the grid to contain the players position.
+     *   *Bug* if you quickly attack it can cause enemies to fall off grid.
      * 
      * 
      */
@@ -235,7 +235,7 @@ public class CharControl : MonoBehaviour
     }
     public void attack(Vector3 location)
     {
-        print("we atk");
+        
         grid.NodeFromWorldPoint(location).getPiece().GetComponent<characterStats>().TakeDamage(gameObject.GetComponent<characterStats>().damage.GetValue());
     }
 
